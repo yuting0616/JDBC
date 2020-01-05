@@ -4,21 +4,23 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class LibroDBMS {
-    private final String url = "jdbc:postgresql://localhost:5432/postgres?currentSchema=Libro_Database";
-    private final String user = "junyang";
-    private final String password = "123456";
+    private final String url = "jdbc:postgresql://cmpstudb-01.cmp.uea.ac.uk:5432/fvt15dda?currentSchema=Libro_Database";
+    private final String user = "fvt15dda";
+    private final String password = "U4x6x9e5";
 
     private final Connection connection;
     private final Statement statement;
 
     public LibroDBMS() throws SQLException, ClassNotFoundException {
-        Class.forName("org.postgresql.Driver");
+
         this.connection = DriverManager.getConnection(url, user, password);
+        System.out.println("1");
         this.statement = this.connection.createStatement();
         this.statement.execute("SET search_path to Libro_Database;");
     }
 
     public void insertBook(String bno, String title, String author, String category, String price) throws SQLException {
+        this.statement.execute("SET search_path to Libro_Database;");
         String query = "INSERT INTO book VALUES (?,?,?,?,?);";
         PreparedStatement preparedStatement = this.connection.prepareStatement(query);
         preparedStatement.setInt(1, Integer.parseInt(bno));
